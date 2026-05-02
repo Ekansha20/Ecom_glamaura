@@ -1,4 +1,5 @@
 🛒 E-Commerce Management System - GLAMAURA
+
 📌 Overview
 
 This project is a mini E-Commerce backend system that combines DBMS concepts with practical application development using Java and SQLite.
