@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product</title>
+
+  <style>
+
+  body {
+    font-family: Arial;
+    margin: 0;
+    background: #f7f7f7;
+  }
+
+  /* NAVBAR */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5c9a9;
+  padding: 14px 40px;
+}
+
+
+/* LOGO */
+.logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 28px;
+  color: #ff4d79;
+}
+
+/* NAV LINKS */
+.nav-links a {
+  margin: 0 14px;
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #ff4d79;
+}
+
+/* RIGHT SECTION */
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* SEARCH BAR */
+.right-section input {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+/* LOGIN */
+.login-btn {
+  background: white;
+  border: 1px solid #ff4d79;
+  color: #ff4d79;
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+
+/* SIGNUP */
+.signup-btn {
+  background: #ff4d79;
+  color: white;
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+
+/* PROFILE */
+.profile-btn {
+  background: black;
+  color: white;
+  border-radius: 10px;
+  padding: 7px 14px;
+}
+
+  /* BACK BUTTON */
+  .back-btn {
+    margin: 15px 25px;
+    padding: 6px 12px;
+    border: none;
+    background: #ffe5ec;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  /* CENTER PAGE */
+  .page {
+    display: flex;
+    justify-content: center;
+    padding: 30px 0;
+  }
+
+  /* CARD */
+  .container {
+    display: flex;
+    gap: 50px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 80%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  /* IMAGE */
+  .left img {
+    width: 320px;
+    border-radius: 12px;
+  }
+
+  /* RIGHT */
+  .right {
+    flex: 1;
+  }
+
+  /* TEXT */
+  .right p {
+    line-height: 1.5;
+  }
+
+  /* SIZE BUTTONS */
+  .size-btn {
+    padding: 8px 16px;
+    margin: 6px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .size-btn:hover {
+    border-color: #ff4d6d;
+  }
+
+  .size-btn.selected {
+    border: 2px solid #ff4d6d;
+    background: #ffe5ec;
+  }
+
+  /* COLOR SWATCH (FIXED) */
+  #colors img {
+    width: 45px;
+    height: 45px;
+
+    /* 🔥 THIS FIXES CIRCLE ISSUE */
+    border-radius: 10px !important;
+
+    margin: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.2s;
+    object-fit: cover;
+  }
+
+  #colors img:hover {
+    transform: scale(1.08);
+  }
+
+  #colors img.selected {
+    border: 2px solid #ff4d6d;
+  }
+
+  /* BUTTONS */
+  .add-cart {
+    background: #ff4d6d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .add-cart:hover {
+    background: #e63b5c;
+  }
+
+  .buy-now {
+    background: #f7a072; /* 🔥 soft orange */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .buy-now:hover {
+    background: #e88c5f;
+  }
+
+  /* REVIEW CARD */
+.review-card {
+  background: #fff0f5; /* light pink */
+  border-left: 4px solid #ff4d79;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* STARS */
+.review-stars {
+  color: #ff4d79;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* TEXT */
+.review-text {
+  font-size: 14px;
+  color: #333;
+}
+
+/* SEE MORE BUTTON */
+.see-more-btn {
+  background: transparent;
+  border: none;
+  color: #ff4d79;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;   /* 🔥 stack vertically */
+  gap: 10px;                /* spacing */
+  margin-top: 10px;
+}
+
+/* dropdown */
+#rating-input {
+  width: 120px;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+/* textarea */
+#review-text {
+  width: 100%;
+  height: 90px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* pink submit button */
+.review-btn {
+  width: fit-content;
+  background: linear-gradient(45deg, #ff4d6d, #ff8fab);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.review-btn:hover {
+  opacity: 0.9;
+}
+
+  </style>
+
+</head>
+
+<body>
+
+<header>
+  <div class="logo">GlamAura</div>
+
+  <nav class="nav-links">
+    <a href="men.html">Men</a>
+    <a href="women.html">Women</a>
+    <a href="kids.html">Kids</a>
+    <a href="unisex.html">Unisex</a>
+    <a href="categories.html">Categories</a>
+    <a href="cart.html">🛒 Cart</a>
+  </nav>
+
+  <div class="right-section">
+    <input type="text" placeholder="Search...">
+
+    <button class="login-btn">Login</button>
+    <button class="signup-btn">Signup</button>
+
+    <button class="icon-btn">👤 Profile</button>
+  </div>
+</header>
+
+<button onclick="history.back()" class="back-btn">← Back</button>
+
+<div class="page">
+  <div class="container">
+
+    <div class="left">
+      <img id="product-img">
+    </div>
+
+    <div class="right">
+
+      <h2 id="name"></h2>
+      <h3 id="price"></h3>
+      <p id="rating"></p>
+
+      <p id="description"></p>
+
+      <h4>Select Size</h4>
+      <div id="sizes"></div>
+
+      <h4>Select Color</h4>
+      <div id="colors"></div>
+
+      <br>
+
+      <button class="add-cart" onclick="addToCart()">Add to Cart</button>
+      <button class="buy-now">Buy Now</button>
+
+      <h3 style="margin-top:25px;">Reviews</h3>
+      <div id="reviews"></div>
+
+      <h4>Add Review</h4>
+
+      <select id="rating-input">
+        <option value="5">5 ⭐</option>
+        <option value="4">4 ⭐</option>
+        <option value="3">3 ⭐</option>
+        <option value="2">2 ⭐</option>
+        <option value="1">1 ⭐</option>
+      </select>
+
+      <textarea id="review-text" placeholder="Write your review..."></textarea>
+
+      <button class="review-btn" onclick="submitReview()">Submit Review</button>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+let selectedSize = null;
+let selectedColor = null;
+let currentProduct = null; 
+
+/* ⭐ STAR FUNCTION */
+function getStars(rating) {
+  let stars = "";
+  let full = Math.floor(rating || 0);
+
+  for (let i = 0; i < full; i++) stars += "★";
+  while (stars.length < 5) stars += "☆";
+
+  return stars;
+}
+
+// 🔥 LOAD PRODUCT
+async function loadProduct() {
+
+  const params = new URLSearchParams(window.location.search);
+  const p_id = params.get("p_id");
+
+  const res = await fetch(`http://127.0.0.1:5000/get_product/${p_id}`);
+  const product = await res.json();
+  currentProduct = product;
+
+  document.getElementById("name").innerText = product.p_name;
+  document.getElementById("price").innerText = "₹" + product.price;
+  document.getElementById("description").innerText = product.description || "No description available";
+
+  document.getElementById("product-img").src =
+  `${product.p_id}.jpg`;
+
+  // ⭐ RATING
+  const ratingRes = await fetch(`http://127.0.0.1:5000/get_rating/${p_id}`);
+  const ratingData = await ratingRes.json();
+
+  document.getElementById("rating").innerText =
+    "⭐ " + (ratingData.average_rating || "No rating");
+
+  // SIZES
+  const sizes = [...new Set(product.variants.map(v => v.size_label))];
+  const sizeDiv = document.getElementById("sizes");
+
+  sizes.forEach(s => {
+    const btn = document.createElement("button");
+    btn.innerText = s;
+    btn.className = "size-btn";
+
+   btn.onclick = function() {
+   selectedSize = this.innerText.trim();
+
+   document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("selected"));
+   this.classList.add("selected");
+   };
+
+    sizeDiv.appendChild(btn);
+  });
+
+// COLORS (SWATCH IMAGES)
+const colorDiv = document.getElementById("colors");
+colorDiv.innerHTML = "";
+
+console.log(product.variants); // 🔥 DEBUG
+
+const colors = [...new Set(product.variants.map(v => v.color_name))];
+
+colors.forEach(c => {
+
+  const wrapper = document.createElement("div");
+  wrapper.style.display = "inline-block";
+  wrapper.style.textAlign = "center";
+  wrapper.style.margin = "8px";
+
+  const img = document.createElement("img");
+
+  // ✅ FIXED
+  img.src = `${c}.jpg`;
+
+  img.style.width = "40px";
+  img.style.height = "40px";
+  img.style.borderRadius = "50%";
+  img.style.cursor = "pointer";
+  img.style.border = "2px solid transparent";
+
+  img.onclick = function () {
+
+  selectedColor = c.trim();  // KEEP THIS (c = color_id like C1)
+
+  document.querySelectorAll("#colors img")
+    .forEach(i => i.classList.remove("selected"));
+
+  this.classList.add("selected");
+};
+
+  const label = document.createElement("div");
+  label.innerText = c;
+  label.style.fontSize = "12px";
+
+  wrapper.appendChild(img);
+  wrapper.appendChild(label);
+
+  colorDiv.appendChild(wrapper);
+});
+
+  loadReviews(p_id);
+}
+
+
+let allReviews = [];
+let showingAll = false;
+
+async function loadReviews(p_id) {
+
+  try {
+    const res = await fetch(`http://127.0.0.1:5000/get_reviews/${p_id}`);
+    const data = await res.json();
+
+    allReviews = data;
+
+    const container = document.getElementById("reviews");
+    container.innerHTML = "";
+
+    if (!data || data.length === 0) {
+      container.innerHTML = "<p>No reviews yet</p>";
+      document.getElementById("rating").innerText = "⭐ No rating";
+      return;
+    }
+
+    // ⭐ CALCULATE AVERAGE
+    let total = 0;
+    data.forEach(r => total += r.rating);
+    let avg = (total / data.length).toFixed(1);
+
+    document.getElementById("rating").innerText =
+      `⭐ ${avg} (${data.length} reviews)`;
+
+    // SHOW FIRST 3 OR ALL
+    const toShow = showingAll ? data : data.slice(0, 3);
+
+    toShow.forEach(r => {
+
+      let stars = "";
+      for (let i = 0; i < r.rating; i++) stars += "★";
+      while (stars.length < 5) stars += "☆";
+
+      container.innerHTML += `
+        <div class="review-card">
+          <div class="review-stars">${stars}</div>
+          <div class="review-text">${r.review_text}</div>
+        </div>
+      `;
+    });
+
+    // SEE MORE BUTTON
+    if (data.length > 3) {
+      container.innerHTML += `
+        <button class="see-more-btn" onclick="toggleReviews()">
+          ${showingAll ? "Show Less" : "See More"}
+        </button>
+      `;
+    }
+
+  } catch (err) {
+    console.error("Error loading reviews:", err);
+  }
+}
+function toggleReviews() {
+  showingAll = !showingAll;
+
+  const params = new URLSearchParams(window.location.search);
+  const p_id = params.get("p_id");
+
+  loadReviews(p_id);
+}
+
+// 🛒 ADD TO CART
+async function addToCart() {
+
+  console.log("ADD TO CART CLICKED");
+
+  // ✅ check selection
+  if (!selectedSize || !selectedColor) {
+    alert("Select size & color");
+    return;
+  }
+
+  console.log("Selected Size:", selectedSize);
+  console.log("Selected Color:", selectedColor);
+  console.log("Variants:", currentProduct.variants);
+
+  // 🔥 SAFE MATCHING
+  const variant = currentProduct.variants.find(v => {
+
+    const sizeMatch =
+      v.size_label &&
+      v.size_label.trim().toLowerCase() === selectedSize.trim().toLowerCase();
+
+    const colorMatch =
+      v.color_name &&
+      v.color_name.trim().toLowerCase() === selectedColor.trim().toLowerCase();
+
+    console.log(
+      "Checking:",
+      v.size_label, v.color_name,
+      "→",
+      sizeMatch, colorMatch
+    );
+
+    return sizeMatch && colorMatch;
+  });
+
+  // ❌ if not found
+  if (!variant) {
+    alert("Variant not found ❌");
+    console.log("Available variants:", currentProduct.variants);
+    return;
+  }
+
+  console.log("FOUND VARIANT:", variant);
+
+  // ✅ API CALL
+  const res = await fetch("http://127.0.0.1:5000/add_to_cart", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      user_id: 1,
+      variant_id: variant.variant_id,
+      quantity: 1
+    })
+  });
+
+  const data = await res.json();
+  console.log("ADD CART RESPONSE:", data);
+
+  if (!res.ok) {
+    alert("Failed to add to cart ❌");
+    return;
+  }
+
+  alert("Added to cart 🛒");
+
+  // ✅ redirect
+  window.location.href = "cart.html";
+}
+
+// ✍️ SUBMIT REVIEW
+async function submitReview() {
+
+  const params = new URLSearchParams(window.location.search);
+  const p_id = params.get("p_id");
+
+  const rating = document.getElementById("rating-input").value;
+  const text = document.getElementById("review-text").value;
+
+  if (!text) {
+    alert("Write review first");
+    return;
+  }
+
+  await fetch("http://127.0.0.1:5000/add_review", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      user_id: 1,
+      p_id: p_id,
+      rating: rating,
+      review_text: text
+    })
+  });
+
+  alert("Review added ✅");
+
+  document.getElementById("review-text").value = "";
+
+  loadReviews(p_id);
+}
+
+
+// 🚀 START
+loadProduct();
+
+</script>
+
+</body>
+</html>

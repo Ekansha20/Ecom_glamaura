@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Women Section</title>
+  <link rel="stylesheet" href="womens.css">
+  
+</head>
+
+
+<body>
+
+<header>
+  <div class="logo">GlamAura</div>
+
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="men.html">Men</a>
+    <a href="women.html" class="active">Women</a>
+    <a href="kids.html">Kids</a>
+    <a href="unisex.html">Unisex</a>
+    <a href="categories.html">Categories</a>
+    <a href="cart.html">🛒 Cart</a>
+  </nav>
+
+  <div class="right">
+
+    <input type="text" placeholder="Search...">
+
+    <button class="login-btn">Login</button>
+    <button class="signup-btn">Signup</button>
+
+    <button class="icon-btn">👤 Profile</button>
+    
+
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- FILTERS (optional UI only) -->
+  <div class="filters">
+    <h3>Filters</h3>
+
+    <h4>Category</h4>
+    <label><input type="checkbox"> Kurti</label>
+    <label><input type="checkbox"> Jeans</label>
+    <label><input type="checkbox"> Dress</label>
+
+    <h4>Gender</h4>
+    <label><input type="checkbox"> Women</label>
+    <label><input type="checkbox"> Unisex</label>
+  </div>
+
+  <!-- PRODUCT GRID -->
+  <div class="products" id="product-list"></div>
+
+</div>
+
+<script>
+
+function getStars(rating) {
+  let stars = "";
+
+  let full = Math.floor(rating);
+  let half = rating % 1 >= 0.5;
+
+  for (let i = 0; i < full; i++) {
+    stars += "★";
+  }
+
+  if (half) {
+    stars += "☆"; // (you can improve later)
+  }
+
+  while (stars.length < 5) {
+    stars += "☆";
+  }
+
+  return stars;
+}
+
+// 🔥 LOAD WOMEN PRODUCTS FROM DB
+async function loadProducts() {
+
+  try {
+    const res = await fetch("http://127.0.0.1:5000/filter?category=Women");
+    const data = await res.json();
+
+    const container = document.getElementById("product-list");
+    container.innerHTML = "";
+
+    if (!data || data.length === 0) {
+      container.innerHTML = "<h3>No products found</h3>";
+      return;
+    }
+
+    // 🔥 CHANGE: using for...of (so we can await rating)
+    for (let product of data) {
+
+      let rating = "N/A";
+
+      try {
+        const ratingRes = await fetch(`http://127.0.0.1:5000/get_rating/${product.p_id}`);
+        const ratingData = await ratingRes.json();
+
+        rating = ratingData.average_rating || "N/A";
+
+      } catch (e) {
+        console.log("Rating fetch failed");
+      }
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <div onclick="openProduct('${product.p_id}')" style="cursor:pointer">
+
+          <!-- ✅ IMAGE FIX -->
+          <img src="${product.p_id}.jpg"
+             onerror="this.src='https://picsum.photos/300/220?random=${Math.random()}'">
+
+          <p><b>${product.p_name}</b></p>
+
+          <h4>₹${product.price}</h4>
+
+          <!-- ✅ RATING ADDED -->
+          <p class="rating">${getStars(rating)} (${rating})</p>
+
+        </div>
+      `;
+
+      container.appendChild(card);
+    }
+
+  } catch (err) {
+    console.error("Error loading products:", err);
+  }
+}
+
+// 🔗 OPEN PRODUCT PAGE
+function openProduct(p_id) {
+  window.location.href = `product.html?p_id=${p_id}`;
+}
+
+
+// 🚀 START
+loadProducts();
+
+</script>
+
+</body>
+</html>

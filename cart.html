@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart</title>
+  <style>
+  body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+/* HEADING */
+h2 {
+  margin-bottom: 20px;
+  color: #ff6f91;
+  font-family: cursive;
+}
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5c9a9;
+  padding: 14px 40px;
+}
+
+/* LOGO */
+.logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 28px;
+  color: #ff4d79;
+}
+
+/* MENU (CENTER) */
+.menu {
+  display: flex;
+  gap: 25px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+}
+
+.menu a:hover {
+  color: #ff4d79;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: transparent;
+  padding: 0;
+}
+
+/* SEARCH */
+.right input {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+/* LOGIN */
+.login-btn {
+  background: white;
+  border: 1px solid #ff4d79;
+  color: #ff4d79;
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+
+/* SIGNUP */
+.signup-btn {
+  background: #ff4d79;
+  color: white;
+  border-radius: 8px;
+  padding: 6px 12px;
+  border: none;
+}
+
+/* PROFILE + CART STYLE */
+.icon-btn {
+  background: black;
+  color: white;
+  border-radius: 10px;
+  padding: 7px 14px;
+  border: none;
+  cursor: pointer;
+}
+.cart-right {
+  width: 30%;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  height: fit-content;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ADDRESS BOX */
+.address {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* MAIN LAYOUT */
+.container {
+  display: flex;
+  gap: 25px;
+}
+
+/* LEFT */
+.left {
+  width: 70%;
+}
+
+
+
+/* CART ITEM */
+.cart-item {
+  background: white;
+  padding: 18px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* REMOVE BUTTON (THEME COLOR) */
+.remove-btn {
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.remove-btn:hover {
+  background: #e63b5c;
+}
+
+/* CHECKOUT BUTTON (THEME MATCH) */
+.checkout {
+  width: 100%;
+  background: linear-gradient(45deg, #ff4d6d, #ff8fab);
+  color: white;
+  padding: 12px;
+  border: none;
+  margin-top: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.checkout:hover {
+  opacity: 0.9;
+}
+
+</style>
+
+</head>
+
+<body>
+  <header class="navbar">
+
+  <div class="logo">GlamAura</div>
+
+  <nav class="menu">
+    <a href="men.html">Men</a>
+    <a href="women.html">Women</a>
+    <a href="kids.html">Kids</a>
+    <a href="unisex.html">Unisex</a>
+    <a href="categories.html">Categories</a>
+    <a href="cart.html">🛒 Cart</a>
+  </nav>
+
+  <div class="right">
+
+    <input type="text" placeholder="Search...">
+
+    <button class="login-btn">Login</button>
+    <button class="signup-btn">Signup</button>
+
+    <button class="icon-btn">👤 Profile</button>
+    
+
+  </div>
+
+</header>
+
+<h2>🛒 My Cart</h2>
+
+<!-- ADDRESS (STATIC FOR NOW) -->
+<div class="address">
+  <h3>Deliver to</h3>
+  <p id="address-text">
+    Ekansha, Muradnagar, Ghaziabad, UP - 201206
+  </p>
+  <button onclick="changeAddress()">Change Address</button>
+</div>
+
+
+<div class="container">
+
+  <!-- LEFT SIDE -->
+  <div class="left" id="cart-container"></div>
+
+  <!-- RIGHT SIDE -->
+  <div class="cart-right">
+
+    <h3>Price Details</h3>
+
+    <p>Total Items: <span id="item-count">0</span></p>
+    <p>Total Price: ₹<span id="total-price">0</span></p>
+
+    <hr>
+
+    <h3>Final Amount: ₹<span id="final-total">0</span></h3>
+
+    <button class="checkout">Proceed to Checkout</button>
+
+  </div>
+
+</div>
+
+<script>
+
+const user_id = 1;
+
+
+// 🏠 CHANGE ADDRESS (UI ONLY)
+function changeAddress() {
+  const newAddress = prompt("Enter new address:");
+
+  if (newAddress) {
+    document.getElementById("address-text").innerText = newAddress;
+  }
+}
+
+
+// 🛒 LOAD CART
+async function loadCart() {
+
+  try {
+    const res = await fetch(`http://127.0.0.1:5000/get_cart/${user_id}`);
+    const data = await res.json();
+
+    const container = document.getElementById("cart-container");
+    container.innerHTML = "";
+
+    let total = 0;
+    let count = 0;
+
+    if (!data || data.length === 0) {
+      container.innerHTML = "<h3>Your cart is empty 🛒</h3>";
+      return;
+    }
+
+    data.forEach(item => {
+
+      const subtotal = item.price * item.quantity;
+      total += subtotal;
+      count += item.quantity;
+
+      const div = document.createElement("div");
+      div.className = "cart-item";
+
+      div.innerHTML = `
+        <h4>${item.p_name}</h4>
+
+        <p>Price: ₹${item.price}</p>
+
+        <p>Quantity: ${item.quantity}</p>
+
+        <p>Size: ${item.size_label || item.size_id || "N/A"}</p>
+        <p>Color: ${item.color_name || item.color_id || "N/A"}</p>
+
+        <p><b>Subtotal: ₹${subtotal}</b></p>
+
+        <button class="remove-btn" onclick="removeItem(${item.variant_id})">
+          Remove
+        </button>
+      `;
+
+      container.appendChild(div);
+    });
+
+    document.getElementById("total-price").innerText = total;
+    document.getElementById("final-total").innerText = total;
+    document.getElementById("item-count").innerText = count;
+
+  } catch (err) {
+    console.error("Cart error:", err);
+  }
+}
+
+
+// ❌ REMOVE ITEM
+async function removeItem(variant_id) {
+
+  await fetch("http://127.0.0.1:5000/remove_from_cart", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      user_id: user_id,
+      variant_id: variant_id
+    })
+  });
+
+  alert("Item removed ❌");
+
+  loadCart();
+}
+
+
+// 🚀 START
+loadCart();
+
+</script>
+
+</body>
+</html>
